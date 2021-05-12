@@ -1,23 +1,38 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 
-export default class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 };
-    this.increaseCount = this.increaseCount.bind(this);
-  }
+const Counter = () => {
+  const [nickname, setNickname] = useState("Terry");
+  const [count, setCount] = useState(0);
 
-  increaseCount = () => {
-    return this.setState({
-      count: this.state.count + 1
-    })
-  }
-  render() {
-    return (
-      <div>
-        <span> 카운트 : {this.state.count} </span>
-        <button onClick={this.increaseCount.bind(this)}>+1 추가</button>
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    document.title = nickname;
+  }, [nickname]);
+
+  const toggleNickname = () => {
+    if (nickname === "Terry") {
+      setNickname("Other");
+    } else {
+      setNickname("Terry");
+    }
+  };
+
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
+  const decreaseCount = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <div>
+      <h1>{nickname}</h1>
+      <button onClick={toggleNickname}>toggleNickname</button>
+      <h3>{count}</h3>
+      <button onClick={decreaseCount}>- 1</button>
+      <button onClick={increaseCount}>+ 1</button>
+    </div>
+  );
+};
+
+export default Counter;
